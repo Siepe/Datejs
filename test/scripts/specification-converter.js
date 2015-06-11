@@ -15,13 +15,18 @@
 				for(test in spec[suite]) {
 					if(test !== 'setup' && spec[suite].hasOwnProperty(test)) {
 					//embed in an IIFE so that the same test doesn't get run over and over
-					(function(testJig){
+					(function(s,testJig){
 						it(test, function(){
 							//apply is used to ensure that run and assert get the same contexts
 							 testJig.run.apply(this);
-							 expect(testJig.assert.apply(this)).toBe(true);
+							 if(s === 'Fail') {
+							 	expect(testJig.assert.apply(this)).toBe(false);
+							 } else {
+							 	expect(testJig.assert.apply(this)).toBe(true);
+							 }
+							 
 						})
-					})(spec[suite][test]);
+					})(suite,spec[suite][test]);
 				}
 				}
 			})
