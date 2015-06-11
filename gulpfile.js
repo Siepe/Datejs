@@ -54,5 +54,5 @@ gulp.task('test', function() {
 
 
 
-gulp.task('default', ['test']);
+gulp.task('default', ['build']);
 
