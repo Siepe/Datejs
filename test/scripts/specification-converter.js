@@ -1,6 +1,10 @@
 // convert cruiser.js Specification objects to jasmine tests
+(function(){
 
-(function(win){
+	var exp;
+
+	
+
 	function Specification(spec) {
 		for(suite in spec) {
 			describe(suite, function(){
@@ -23,5 +27,13 @@
 			})
 		}
 	}
-	window.Specification = Specification;
-})(window);
+	
+	if(typeof module !== 'undefined') {
+		module.exports = Specification;
+	} else {
+		window.Specification = Specification;
+	}
+
+})();
+
+
