@@ -46,33 +46,6 @@ Date.Specification = new Specification({
       run: function() { },
       assert: function() { return Date.today().next().month().equals( Date.parse('next month') ) }
     },                     
-    'yesterday at 4:00': {
-      run: function() { 
-          this.parsed = Date.parse('yesterday at 4:00');
-          this.computed = Date.today().addDays(-1).set({ hour: 4 });
-      },
-      assert: function() { 
-        return this.parsed.equals(this.computed); 
-      }
-    },
-    'last friday at 20:00': {
-      run: function() { },
-      assert: function() { return Date.today().last().friday().set({ hour: 20 }).equals( Date.parse('last friday at 20:00') ) }
-    }, 
-    'last week tuesday': {
-      run: function() { },
-      assert: function() { return Date.tuesday().last().week().equals( Date.parse('last week tuesday') ) }
-    },             
-    'tomorrow at 6:45pm': {
-      run: function() { },
-      assert: function() { return Date.today().addDays(1).set({ hour: 18, minute: 45}).equals( Date.parse('tomorrow at 6:45pm') ) }
-    },
-   'thursday last week': {
-      run: function() { },
-      assert: function() { 
-        return Date.thursday().last().week().equals( Date.parse('thursday last week') ) 
-      }
-    },
    '5 months before now': {
       run: function() { },
       assert: function() { return new Date().set({ millisecond: 0 }).add(-5).months().equals(Date.parse('5 months before now').set({millisecond: 0})) }
@@ -210,6 +183,33 @@ Date.Specification = new Specification({
       run: function() { },
       assert: function() { return Date.today().set({ month: 11, day: 21 }).add(-1).year().equals( Date.parse('last winter') ) }
     }, 
+    'thursday last week -- last not supported': {
+      run: function() { },
+      assert: function() { 
+        return Date.thursday().last().week().equals( Date.parse('thursday last week') ) 
+      }
+    },
+    'last week tuesday -- last not supported': {
+      run: function() { },
+      assert: function() { return Date.tuesday().last().week().equals( Date.parse('last week tuesday') ) }
+    },  
+        'yesterday at 4:00 -- at not supported': {
+      run: function() { 
+          this.parsed = Date.parse('yesterday at 4:00');
+          this.computed = Date.today().addDays(-1).set({ hour: 4 });
+      },
+      assert: function() { 
+        return this.parsed.equals(this.computed); 
+      }
+    },           
+    'tomorrow at 6:45pm -- at not supported': {
+      run: function() { },
+      assert: function() { return Date.today().addDays(1).set({ hour: 18, minute: 45}).equals( Date.parse('tomorrow at 6:45pm') ) }
+    },
+    'last friday at 20:00 -- last not supported': {
+      run: function() { },
+      assert: function() { return Date.today().last().friday().set({ hour: 20 }).equals( Date.parse('last friday at 20:00') ) }
+    },
     'this morning : The term "morning" is not supported': {
       run: function() { },
       assert: function() { return Date.today().set({ hour: 9 }).equals( Date.parse('this morning') ) }
