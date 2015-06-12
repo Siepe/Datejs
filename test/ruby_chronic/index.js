@@ -47,8 +47,13 @@ Date.Specification = new Specification({
       assert: function() { return Date.today().next().month().equals( Date.parse('next month') ) }
     },                     
     'yesterday at 4:00': {
-      run: function() { },
-      assert: function() { return Date.today().add(-1).day().set({ hour: 4 }).equals( Date.parse('yesterday at 4:00') ) }
+      run: function() { 
+          this.parsed = Date.parse('yesterday at 4:00');
+          this.computed = Date.today().addDays(-1).set({ hour: 4 });
+      },
+      assert: function() { 
+        return this.parsed.equals(this.computed); 
+      }
     },
     'last friday at 20:00': {
       run: function() { },
@@ -60,11 +65,13 @@ Date.Specification = new Specification({
     },             
     'tomorrow at 6:45pm': {
       run: function() { },
-      assert: function() { return Date.today().add(1).day().set({ hour: 18, minute: 45}).equals( Date.parse('tomorrow at 6:45pm') ) }
+      assert: function() { return Date.today().addDays(1).set({ hour: 18, minute: 45}).equals( Date.parse('tomorrow at 6:45pm') ) }
     },
    'thursday last week': {
       run: function() { },
-      assert: function() { return Date.thursday().last().week().equals( Date.parse('thursday last week') ) }
+      assert: function() { 
+        return Date.thursday().last().week().equals( Date.parse('thursday last week') ) 
+      }
     },
    '5 months before now': {
       run: function() { },
@@ -168,7 +175,11 @@ Date.Specification = new Specification({
     'January 5 @ 7pm': {
       run: function() { },
       assert: function() { return Date.january().set({day: 5, hour: 19}).equals(Date.parse('January 5 @ 7pm')) }
-    }              
+    },
+    'this second : The term "this" is not supported': {
+      run: function() { },
+      assert: function() { return new Date().equals( Date.parse('this second') ) }
+    }   
   },
 'Fail': {
     setup: function() { 
@@ -206,11 +217,7 @@ Date.Specification = new Specification({
     'last night : The term "night" is not supported': {
       run: function() { },
       assert: function() { return Date.today().set({ hour: 18 }).equals( Date.parse('last night') ) }
-    },
-    'this second : The term "this" is not supported': {
-      run: function() { },
-      assert: function() { return new Date().equals( Date.parse('this second') ) }
-    },            
+    },         
     'afternoon yesterday : The term "afternoon" is not supported': {
       run: function() { },
       assert: function() { return Date.today().add(1).day().set({ hour: 12 }).equals( Date.parse('afternoon yesterday') ) }
